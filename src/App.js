@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.scss';
 
 function BoardSpace({ index, value, onClick }) {
     const move = event => {
-        debugger;
+        onClick(event, index);
     };
 
     return (
@@ -13,26 +13,43 @@ function BoardSpace({ index, value, onClick }) {
     );
 }
 
-function Board() {
-    const boardSize = 3 * 3;
-    let spaces = [];
+function GameBoard(player, onWin) {
+    const [spaces, setSpaces] = useState(['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']);
 
-    for (let i = 0; i < boardSize; i++) {
-        spaces.push(<BoardSpace key={i} index={i} value="X" />);
-    }
+    const makeMove = (event, index) => {
+        setSpaces([].concat(spaces.slice(0, index), ['X'], spaces.slice(index + 1)));
+    };
 
     return (
         <>
-            <div className="board">{spaces}</div>
+            <div className="board">
+                {spaces.map((space, i) => (
+                    <BoardSpace key={i} index={i} value={space} onClick={makeMove} />
+                ))}
+            </div>
+        </>
+    );
+}
+
+function ScoreBoard() {
+    return (
+        <>
+            <h1>Player 1</h1>
         </>
     );
 }
 
 function App() {
+    const [player, setPlayer] = useState('X');
+    const addPointToWinner = () => {
+        debugger;
+    };
+
     return (
         <>
             <div className="App">
-                <Board />
+                <ScoreBoard />
+                <GameBoard player={player} onWin={addPointToWinner} />
             </div>
         </>
     );

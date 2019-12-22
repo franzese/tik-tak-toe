@@ -19,6 +19,7 @@
         font-size: 20rem;
         text-align: center;
         line-height: 20rem;
+        min-width: 1rem;
         &.O {
             color: $lavender;
             text-shadow: 2px 2px $yeller, 4px 4px $yeller;
