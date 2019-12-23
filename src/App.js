@@ -30,10 +30,18 @@ function GameBoard(props) {
         [2, 4, 6],
     ];
 
+    const reset = () => {
+        setSpaces([' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']);
+        setMoveCount(0);
+        setIsWinner(false);
+    };
+
     const makeMove = (event, index) => {
         if (!isWinner && !spaces[index].trim()) {
             setSpaces([...spaces.slice(0, index), props.player, ...spaces.slice(index + 1)]);
             setMoveCount(moveCount + 1);
+        } else if (isWinner) {
+            reset();
         }
     };
 
@@ -61,9 +69,11 @@ function GameBoard(props) {
     return (
         <>
             <div className="game-board">
-                {spaces.map((space, i) => (
-                    <BoardSpace key={i} index={i} value={space} onClick={makeMove} />
-                ))}
+                <div className="game-board-inner">
+                    {spaces.map((space, i) => (
+                        <BoardSpace key={i} index={i} value={space} onClick={makeMove} />
+                    ))}
+                </div>
             </div>
         </>
     );
@@ -73,8 +83,12 @@ function ScoreBoard(props) {
     return (
         <>
             <div className="score-board">
-                <input type="text" placeholder="Player 1" />
-                <input type="text" placeholder="Player 2" />
+                <h1>Player 1 (X)</h1>
+                <h1>Tie:</h1>
+                <h1>Player 2 (O)</h1>
+                <p className="scores">2</p>
+                <p className="scores">20</p>
+                <p className="scores">12</p>
             </div>
         </>
     );
@@ -99,7 +113,7 @@ function App() {
             <div className="app">
                 <ScoreBoard player={player} />
                 <GameBoard player={player} onChange={togglePlayer} onWin={addPointToWinner} />
-                <h1>{nextMessage}</h1>
+                <h1 className={'message'}>{nextMessage}</h1>
             </div>
         </>
     );

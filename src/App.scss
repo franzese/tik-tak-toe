@@ -13,40 +13,65 @@
 }
 
 .game-board {
-    display: grid;
-    grid-template-columns: 3fr 3fr 3fr;
-    grid-template-rows: 3fr 3fr 3fr;
-    grid-gap: 1rem;
-    background-color: black;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    button {
-        margin: 0;
-        padding: 0;
-        appearance: none;
-        outline: none;
-        cursor: pointer;
-        display: block;
-        background: $teal;
-        border: none;
-        text-transform: uppercase;
-        font-size: 20rem;
-        text-align: center;
-        line-height: 20rem;
-        min-width: 1em;
-        min-height: 1em;
-        border-radius: 1rem;
-        overflow: hidden;
-        &.O {
-            @include O;
-        }
-        &.X {
-            @include X;
+    .game-board-inner {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        grid-gap: 1rem;
+        background-color: black;
+
+        button {
+            margin: 0;
+            padding: 0;
+            appearance: none;
+            outline: none;
+            cursor: pointer;
+            display: block;
+            background: $teal;
+            border: none;
+            text-transform: uppercase;
+            font-size: 20rem;
+            text-align: center;
+            line-height: 20rem;
+            min-width: 1em;
+            min-height: 1em;
+            border-radius: 1rem;
+            overflow: hidden;
+            &.O {
+                @include O;
+            }
+            &.X {
+                @include X;
+            }
         }
     }
 }
 
 .score-board {
     color: white;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin: 2rem 0;
+
+    h1 {
+        &:last-child {
+            @include O;
+        }
+        &:first-child {
+            @include X;
+        }
+
+        width: 100%;
+    }
+
+    .scores {
+        font-size: 3rem;
+    }
 
     input {
         border: dotted white;
@@ -72,7 +97,7 @@
     justify-content: flex-start;
     align-items: center;
 
-    h1 {
+    .message {
         margin: 2rem;
     }
 }
