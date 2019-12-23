@@ -13,12 +13,45 @@ function BoardSpace({ index, value, onClick }) {
     );
 }
 
-function GameBoard(player, onWin) {
-    const [spaces, setSpaces] = useState(['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']);
+function GameBoard(props) {
+    const [spaces, setSpaces] = useState([' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']);
+    const [moveCount, setMoveCount] = useState(0);
+    const [isWinner, setIsWinner] = useState(false);
+    const onWin = props.onWin;
+    const onChange = props.onChange;
+    const winningRows = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6],
+    ];
 
     const makeMove = (event, index) => {
-        setSpaces([].concat(spaces.slice(0, index), ['X'], spaces.slice(index + 1)));
+        setSpaces([...spaces.slice(0, index), [props.player], ...spaces.slice(index + 1)]);
+        setMoveCount(moveCount + 1);
+        onChange();
     };
+
+    useEffect(() => {
+        if (isWinner) {
+            onWin();
+        } else {
+            winningRows.forEach(row => {
+                // todo- clean up
+                if (
+                    spaces[row[0]][0] !== ' ' &&
+                    spaces[row[0]][0] === spaces[row[1]][0] &&
+                    spaces[row[1]][0] === spaces[row[2]][0]
+                ) {
+                    setIsWinner(true);
+                }
+            });
+        }
+    }, [isWinner, onWin, spaces, winningRows]);
 
     return (
         <>
@@ -41,15 +74,20 @@ function ScoreBoard() {
 
 function App() {
     const [player, setPlayer] = useState('X');
-    const addPointToWinner = () => {
-        debugger;
+    const addPointToWinner = winner => {
+        alert('Winner!');
+    };
+
+    const togglePlayer = () => {
+        if (player === 'X') setPlayer('O');
+        else if (player === 'O') setPlayer('X');
     };
 
     return (
         <>
             <div className="App">
                 <ScoreBoard />
-                <GameBoard player={player} onWin={addPointToWinner} />
+                <GameBoard player={player} onChange={togglePlayer} onWin={addPointToWinner} />
             </div>
         </>
     );
