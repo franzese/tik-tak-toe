@@ -31,31 +31,36 @@ function GameBoard(props) {
     ];
 
     const makeMove = (event, index) => {
-        setSpaces([...spaces.slice(0, index), [props.player], ...spaces.slice(index + 1)]);
-        setMoveCount(moveCount + 1);
-        onChange();
+        if (!isWinner && !spaces[index].trim()) {
+            setSpaces([...spaces.slice(0, index), props.player, ...spaces.slice(index + 1)]);
+            setMoveCount(moveCount + 1);
+        }
+    };
+
+    const checkWins = () => {
+        winningRows.forEach(row => {
+            // todo- clean up
+            if (
+                spaces[row[0]][0] !== ' ' &&
+                spaces[row[0]][0] === spaces[row[1]][0] &&
+                spaces[row[1]][0] === spaces[row[2]][0]
+            ) {
+                setIsWinner(true);
+                onWin(props.player);
+            } else {
+                onChange();
+            }
+        });
     };
 
     useEffect(() => {
-        if (isWinner) {
-            onWin();
-        } else {
-            winningRows.forEach(row => {
-                // todo- clean up
-                if (
-                    spaces[row[0]][0] !== ' ' &&
-                    spaces[row[0]][0] === spaces[row[1]][0] &&
-                    spaces[row[1]][0] === spaces[row[2]][0]
-                ) {
-                    setIsWinner(true);
-                }
-            });
-        }
-    }, [isWinner, onWin, spaces, winningRows]);
+        checkWins();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [spaces]);
 
     return (
         <>
-            <div className="board">
+            <div className="game-board">
                 {spaces.map((space, i) => (
                     <BoardSpace key={i} index={i} value={space} onClick={makeMove} />
                 ))}
@@ -64,18 +69,22 @@ function GameBoard(props) {
     );
 }
 
-function ScoreBoard() {
+function ScoreBoard(props) {
     return (
         <>
-            <h1>Player 1</h1>
+            <div className="score-board">
+                <input type="text" placeholder="Player 1" />
+                <input type="text" placeholder="Player 2" />
+            </div>
         </>
     );
 }
 
 function App() {
     const [player, setPlayer] = useState('X');
+    const [nextMessage, setNextMessage] = useState("Player 1's turn");
     const addPointToWinner = winner => {
-        alert('Winner!');
+        setNextMessage(winner + ' wins!');
     };
 
     const togglePlayer = () => {
@@ -83,11 +92,14 @@ function App() {
         else if (player === 'O') setPlayer('X');
     };
 
+    useEffect(() => {}, [player]);
+
     return (
         <>
-            <div className="App">
-                <ScoreBoard />
+            <div className="app">
+                <ScoreBoard player={player} />
                 <GameBoard player={player} onChange={togglePlayer} onWin={addPointToWinner} />
+                <h1>{nextMessage}</h1>
             </div>
         </>
     );

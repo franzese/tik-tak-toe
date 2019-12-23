@@ -1,6 +1,18 @@
 @import 'styles/colors.scss';
 
-.board {
+@mixin X {
+    color: $yeller;
+    text-shadow: 2px 2px $lavender, 4px 4px adjust-color($lavender, $alpha: -0.2),
+        6px 6px adjust-color($lavender, $alpha: -0.4), 8px 8px adjust-color($lavender, $alpha: -0.6);
+}
+
+@mixin O {
+    color: $lavender;
+    text-shadow: 2px 2px $yeller, 4px 4px adjust-color($yeller, $alpha: -0.2),
+        6px 6px adjust-color($yeller, $alpha: -0.4), 8px 8px adjust-color($yeller, $alpha: -0.6);
+}
+
+.game-board {
     display: grid;
     grid-template-columns: 3fr 3fr 3fr;
     grid-template-rows: 3fr 3fr 3fr;
@@ -15,65 +27,52 @@
         cursor: pointer;
         display: block;
         background: $teal;
+        border: none;
         text-transform: uppercase;
         font-size: 20rem;
         text-align: center;
         line-height: 20rem;
-        width: 1em;
-        height: 1em;
+        min-width: 1em;
+        min-height: 1em;
         border-radius: 1rem;
+        overflow: hidden;
         &.O {
-            color: $lavender;
-            text-shadow: 2px 2px $yeller, 4px 4px $yeller;
+            @include O;
         }
         &.X {
-            color: $yeller;
-            text-shadow: 2px 2px $lavender, 4px 4px $lavender;
+            @include X;
         }
     }
 }
 
-.App {
+.score-board {
+    color: white;
+
+    input {
+        border: dotted white;
+        border-width: 0 0 5px 0;
+        color: white;
+        font-size: 3rem;
+        appearance: none;
+        background-color: black;
+        border-radius: 3px;
+        outline: none;
+        &:focus {
+            background: $oafoaf;
+        }
+    }
+}
+
+.app {
     text-align: center;
     background-color: black;
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-}
 
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
-}
-
-.App-header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
-}
-
-.App-link {
-    color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
+    h1 {
+        margin: 2rem;
     }
 }
