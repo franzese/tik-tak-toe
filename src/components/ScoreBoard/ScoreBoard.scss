@@ -1,0 +1,39 @@
+@import '../../styles/colors.scss';
+@import '../../styles/mixins.scss';
+
+.score-board {
+    color: white;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin: 2rem 0;
+
+    h1 {
+        font-size: 2.5rem;
+        &:last-child {
+            @include O;
+        }
+        &:first-child {
+            @include X;
+        }
+
+        width: 100%;
+    }
+
+    .scores {
+        font-size: 3rem;
+    }
+
+    input {
+        border: dotted white;
+        border-width: 0 0 5px 0;
+        color: white;
+        font-size: 3rem;
+        appearance: none;
+        background-color: black;
+        border-radius: 3px;
+        outline: none;
+        &:focus {
+            background: $oafoaf;
+        }
+    }
+}

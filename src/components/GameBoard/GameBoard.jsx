@@ -1,24 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import './App.scss';
+import './GameBoard.scss';
 
-function BoardSpace({ index, value, onClick }) {
+export function BoardSpace({ index, value, onClick }) {
     const move = event => {
         onClick(event, index);
     };
 
     return (
         <button type="button" onClick={move} className={value}>
-            {value}
+            <mark>{value}</mark>
         </button>
     );
 }
 
-function GameBoard(props) {
+export default function GameBoard({ onWin, onChange, player }) {
     const [spaces, setSpaces] = useState([' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']);
     const [moveCount, setMoveCount] = useState(0);
     const [isWinner, setIsWinner] = useState(false);
-    const onWin = props.onWin;
-    const onChange = props.onChange;
     const winningRows = [
         [0, 1, 2],
         [3, 4, 5],
@@ -38,7 +36,7 @@ function GameBoard(props) {
 
     const makeMove = (event, index) => {
         if (!isWinner && !spaces[index].trim()) {
-            setSpaces([...spaces.slice(0, index), props.player, ...spaces.slice(index + 1)]);
+            setSpaces([...spaces.slice(0, index), player, ...spaces.slice(index + 1)]);
             setMoveCount(moveCount + 1);
         } else if (isWinner) {
             reset();
@@ -54,7 +52,7 @@ function GameBoard(props) {
                 spaces[row[1]][0] === spaces[row[2]][0]
             ) {
                 setIsWinner(true);
-                onWin(props.player);
+                onWin(player);
             } else {
                 onChange();
             }
@@ -78,45 +76,3 @@ function GameBoard(props) {
         </>
     );
 }
-
-function ScoreBoard(props) {
-    return (
-        <>
-            <div className="score-board">
-                <h1>Player 1 (X)</h1>
-                <h1>Tie:</h1>
-                <h1>Player 2 (O)</h1>
-                <p className="scores">2</p>
-                <p className="scores">20</p>
-                <p className="scores">12</p>
-            </div>
-        </>
-    );
-}
-
-function App() {
-    const [player, setPlayer] = useState('X');
-    const [nextMessage, setNextMessage] = useState("Player 1's turn");
-    const addPointToWinner = winner => {
-        setNextMessage(winner + ' wins!');
-    };
-
-    const togglePlayer = () => {
-        if (player === 'X') setPlayer('O');
-        else if (player === 'O') setPlayer('X');
-    };
-
-    useEffect(() => {}, [player]);
-
-    return (
-        <>
-            <div className="app">
-                <ScoreBoard player={player} />
-                <GameBoard player={player} onChange={togglePlayer} onWin={addPointToWinner} />
-                <h1 className={'message'}>{nextMessage}</h1>
-            </div>
-        </>
-    );
-}
-
-export default App;
