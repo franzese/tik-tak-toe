@@ -7,20 +7,31 @@
     grid-template-columns: 1fr 1fr 1fr;
     margin: 2rem 0;
 
-    h1 {
-        font-size: 2.5rem;
-        &:last-child {
-            @include O;
-        }
-        &:first-child {
-            @include X;
-        }
+    .playerOne {
+        @include O;
+    }
+    .playerTwo {
+        @include X;
+    }
 
+    h1 {
+        display: inline;
+        font-size: 2.5rem;
         width: 100%;
+        border-bottom: 6px dotted white;
+    }
+
+    mark {
+        display: inline;
+        font-size: 2.5rem;
+        background-color: transparent;
+        color: inherit;
+        text-decoration: none;
     }
 
     .scores {
-        font-size: 3rem;
+        margin: 1rem;
+        font-size: 4rem;
     }
 
     input {

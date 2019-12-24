@@ -1,16 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './ScoreBoard.scss';
 
-export default function ScoreBoard(props) {
+export default function ScoreBoard({ scoreCard }) {
     return (
         <>
             <div className="score-board">
-                <h1>Player 1 (X)</h1>
-                <h1>Tie:</h1>
-                <h1>Player 2 (O)</h1>
-                <p className="scores">2</p>
-                <p className="scores">20</p>
-                <p className="scores">12</p>
+                <div>
+                    <mark className="playerOne">{scoreCard.playerOne.mark}&nbsp;</mark>
+                    <h1>{scoreCard.playerOne.name}</h1>
+                </div>
+                <h1 style={{ border: 'none' }}>Tie</h1>
+                <div>
+                    <mark className="playerTwo">{scoreCard.playerTwo.mark}&nbsp;</mark>
+                    <h1>{scoreCard.playerTwo.name}</h1>
+                </div>
+                <p className="scores">{scoreCard.playerOne.points}</p>
+                <p className="scores">{scoreCard.tie}</p>
+                <p className="scores">{scoreCard.playerTwo.points}</p>
             </div>
         </>
     );
