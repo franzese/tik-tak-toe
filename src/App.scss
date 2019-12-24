@@ -2,14 +2,14 @@
 
 @mixin X {
     color: $yeller;
-    text-shadow: 2px 2px $lavender, 4px 4px adjust-color($lavender, $alpha: -0.2),
-        6px 6px adjust-color($lavender, $alpha: -0.4), 8px 8px adjust-color($lavender, $alpha: -0.6);
+    text-shadow: 2px 2px $lavender, 4px 4px adjust-color($lavender, $alpha: -0.4),
+        6px 6px adjust-color($lavender, $alpha: -0.6), 8px 8px adjust-color($lavender, $alpha: -0.8);
 }
 
 @mixin O {
     color: $lavender;
-    text-shadow: 2px 2px $yeller, 4px 4px adjust-color($yeller, $alpha: -0.2),
-        6px 6px adjust-color($yeller, $alpha: -0.4), 8px 8px adjust-color($yeller, $alpha: -0.6);
+    text-shadow: 2px 2px $yeller, 4px 4px adjust-color($yeller, $alpha: -0.4),
+        6px 6px adjust-color($yeller, $alpha: -0.6), 8px 8px adjust-color($yeller, $alpha: -0.8);
 }
 
 .game-board {
@@ -17,9 +17,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    max-width: 70rem;
+    max-height: 70vh;
+    padding: 1rem;
 
     .game-board-inner {
         display: grid;
+        height: 100%;
         grid-template-columns: 1fr 1fr 1fr;
         grid-template-rows: 1fr 1fr 1fr;
         grid-gap: 1rem;
@@ -31,15 +35,17 @@
             appearance: none;
             outline: none;
             cursor: pointer;
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             background: $teal;
             border: none;
             text-transform: uppercase;
             font-size: 20rem;
             text-align: center;
             line-height: 20rem;
-            min-width: 1em;
-            min-height: 1em;
+            max-width: 1em;
+            max-height: 1em;
             border-radius: 1rem;
             overflow: hidden;
             &.O {
@@ -47,6 +53,22 @@
             }
             &.X {
                 @include X;
+            }
+
+            &.O,
+            &.X {
+                mark {
+                    transform: scale(1);
+                }
+            }
+
+            mark {
+                background-color: transparent;
+                color: inherit;
+                min-width: 1em;
+                line-height: 0;
+                transform: scale(0);
+                transition: transform 80ms ease-in;
             }
         }
     }
@@ -59,6 +81,7 @@
     margin: 2rem 0;
 
     h1 {
+        font-size: 2.5rem;
         &:last-child {
             @include O;
         }
