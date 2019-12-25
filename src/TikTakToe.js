@@ -13,7 +13,7 @@ function TikTakToe() {
     const [player, setPlayer] = useState({ key: 'playerOne', ...scoreCard.playerOne });
 
     const addPointToWinner = winner => {
-        let playerWithPoints = { [winner.key]: { points: winner.points, name: winner.name, mark: winner.mark } };
+        let playerWithPoints = { [winner.key]: { points: winner.points + 1, name: winner.name, mark: winner.mark } };
         setScoreCard({ ...scoreCard, ...playerWithPoints });
     };
 
