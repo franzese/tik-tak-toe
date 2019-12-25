@@ -13,8 +13,8 @@ export function BoardSpace({ index, value, onClick }) {
     );
 }
 
-export default function GameBoard({ onWin, onChange, player }) {
-    const [spaces, setSpaces] = useState([' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']);
+export default function GameBoard({ board, onWin, onChange, onTie, player }) {
+    const [spaces, setSpaces] = useState(board || [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']);
     const [moveCount, setMoveCount] = useState(0);
     const [isWinner, setIsWinner] = useState(false);
     const winningRows = [
@@ -35,11 +35,11 @@ export default function GameBoard({ onWin, onChange, player }) {
     };
 
     const makeMove = (event, index) => {
-        if (!isWinner && !spaces[index].trim()) {
-            setSpaces([...spaces.slice(0, index), player, ...spaces.slice(index + 1)]);
-            setMoveCount(moveCount + 1);
-        } else if (isWinner) {
+        if (isWinner) {
             reset();
+        } else if (!spaces[index].trim()) {
+            setSpaces([...spaces.slice(0, index), player.mark, ...spaces.slice(index + 1)]);
+            setMoveCount(moveCount + 1);
         }
     };
 
