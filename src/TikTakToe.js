@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import GameBoard from './components/GameBoard/GameBoard';
 import ScoreBoard from './components/ScoreBoard/ScoreBoard';
 import './TikTakToe.scss';
@@ -25,8 +25,6 @@ function TikTakToe() {
         if (player.key === 'playerOne') setPlayer({ key: 'playerTwo', ...scoreCard.playerTwo });
         else if (player.key === 'playerTwo') setPlayer({ key: 'playerOne', ...scoreCard.playerOne });
     };
-
-    useEffect(() => {}, [player]);
 
     return (
         <>
