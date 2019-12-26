@@ -1,9 +1,9 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import App from './App';
+import TikTakToe from './TikTakToe';
 
-test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+xtest('renders learn react link', () => {
+    const { getByText } = render(<TikTakToe />);
+    const linkElement = getByText(/learn react/i);
+    expect(linkElement).toBeInTheDocument();
 });
