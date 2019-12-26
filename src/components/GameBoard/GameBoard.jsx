@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './GameBoard.scss';
 
-export function BoardSpace({ index, value, onClick }) {
+export function BoardSpace({ index, value, onClick, isWinner }) {
     const move = event => {
         onClick(event, index);
     };
 
+    const className = isWinner ? value + ' winner' : value;
     return (
-        <button type="button" onClick={move} className={value}>
+        <button type="button" onClick={move} className={className}>
             <mark>{value}</mark>
         </button>
     );
@@ -16,7 +17,9 @@ export function BoardSpace({ index, value, onClick }) {
 export default function GameBoard({ board, onWin, onChange, onTie, player }) {
     const [spaces, setSpaces] = useState(board || [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']);
     const [moveCount, setMoveCount] = useState(0);
-    const [isWinner, setIsWinner] = useState(false);
+    const [needsReset, setResetFlag] = useState(false);
+    const [winningRow, setWinningRow] = useState([]);
+
     const winningRows = [
         [0, 1, 2],
         [3, 4, 5],
@@ -31,11 +34,12 @@ export default function GameBoard({ board, onWin, onChange, onTie, player }) {
     const reset = () => {
         setSpaces([' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']);
         setMoveCount(0);
-        setIsWinner(false);
+        setResetFlag(false);
+        setWinningRow([]);
     };
 
-    const makeMove = (event, index) => {
-        if (isWinner) {
+    const setSpaceToMark = (event, index) => {
+        if (needsReset) {
             reset();
         } else if (!spaces[index].trim()) {
             setSpaces([...spaces.slice(0, index), player.mark, ...spaces.slice(index + 1)]);
@@ -44,6 +48,7 @@ export default function GameBoard({ board, onWin, onChange, onTie, player }) {
     };
 
     const checkWins = () => {
+        let checkTie = true;
         winningRows.forEach(row => {
             // todo- clean up
             if (
@@ -51,12 +56,24 @@ export default function GameBoard({ board, onWin, onChange, onTie, player }) {
                 spaces[row[0]][0] === spaces[row[1]][0] &&
                 spaces[row[1]][0] === spaces[row[2]][0]
             ) {
-                setIsWinner(true);
+                setResetFlag(true);
+                checkTie = false;
+                setWinningRow(row);
                 onWin(player);
             } else {
                 onChange();
             }
         });
+
+        if (checkTie && moveCount >= spaces.length) {
+            onTie();
+            setResetFlag(true);
+        }
+    };
+
+    const mapBoardSpaces = (space, i) => {
+        const isWinner = !!winningRow.includes(i);
+        return <BoardSpace key={i} index={i} value={space} isWinner={isWinner} onClick={setSpaceToMark} />;
     };
 
     useEffect(() => {
@@ -67,11 +84,7 @@ export default function GameBoard({ board, onWin, onChange, onTie, player }) {
     return (
         <>
             <div className="game-board">
-                <div className="game-board-inner">
-                    {spaces.map((space, i) => (
-                        <BoardSpace key={i} index={i} value={space} onClick={makeMove} />
-                    ))}
-                </div>
+                <div className="game-board-inner">{spaces.map(mapBoardSpaces)}</div>
             </div>
         </>
     );

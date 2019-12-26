@@ -51,6 +51,12 @@
                 }
             }
 
+            &.winner {
+                animation: seizureInducer 200ms infinite;
+                text-shadow: 2px 2px adjust-color(black, $alpha: -0.4), 4px 4px adjust-color(black, $alpha: -0.6),
+                    6px 6px adjust-color(black, $alpha: -0.8);
+            }
+
             mark {
                 background-color: transparent;
                 color: inherit;
