@@ -13,15 +13,15 @@ export default function ScoreBoard({ player, scoreCard }) {
         <>
             <div className="score-board">
                 <h1 className={isPlayersTurn('playerOne')}>
-                    {scoreCard.playerOne.mark}&nbsp;{scoreCard.playerOne.name}
+                    {scoreCard.players[0].mark}&nbsp;{scoreCard.players[0].name}
                 </h1>
                 <h1>Tie</h1>
                 <h1 className={isPlayersTurn('playerTwo')}>
-                    {scoreCard.playerTwo.mark}&nbsp;{scoreCard.playerTwo.name}
+                    {scoreCard.players[1].mark}&nbsp;{scoreCard.players[1].name}
                 </h1>
-                <p className="scores">{scoreCard.playerOne.points}</p>
+                <p className="scores">{scoreCard.players[0].points}</p>
                 <p className="scores">{scoreCard.tie}</p>
-                <p className="scores">{scoreCard.playerTwo.points}</p>
+                <p className="scores">{scoreCard.players[1].points}</p>
             </div>
         </>
     );

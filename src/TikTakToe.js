@@ -6,14 +6,19 @@ import './TikTakToe.scss';
 function TikTakToe() {
     const [scoreCard, setScoreCard] = useState({
         tie: 0,
-        playerOne: { points: 0, name: 'Player', mark: 'O', key: 'playerOne' },
-        playerTwo: { points: 0, name: 'Player', mark: 'X', key: 'playerTwo' },
+        players: [
+            { points: 0, name: 'Player', mark: 'O', key: 'playerOne' },
+            { points: 0, name: 'Player', mark: 'X', key: 'playerTwo' },
+        ],
     });
-    const [player, setPlayer] = useState({ key: 'playerOne', ...scoreCard.playerOne });
+    const [playerIndex, setPlayerIndex] = useState(Math.floor(Math.random() * 2));
 
     const addPointToWinner = winner => {
-        let playerWithPoints = { [winner.key]: { points: winner.points + 1, name: winner.name, mark: winner.mark } };
-        setScoreCard({ ...scoreCard, ...playerWithPoints });
+        let players = scoreCard.players.map(player => {
+            if (player.key === winner.key) return { ...player, points: player.points + 1 };
+            return player;
+        });
+        setScoreCard({ ...scoreCard, players: players });
     };
 
     const addPointToTie = winner => {
@@ -21,15 +26,20 @@ function TikTakToe() {
     };
 
     const togglePlayer = () => {
-        if (player.key === 'playerOne') setPlayer({ key: 'playerTwo', ...scoreCard.playerTwo });
-        else if (player.key === 'playerTwo') setPlayer({ key: 'playerOne', ...scoreCard.playerOne });
+        if (playerIndex === 0) setPlayerIndex(1);
+        else if (playerIndex === 1) setPlayerIndex(0);
     };
 
     return (
         <>
             <div className="tik-tak-toe">
-                <ScoreBoard player={player} scoreCard={scoreCard} />
-                <GameBoard player={player} onChange={togglePlayer} onWin={addPointToWinner} onTie={addPointToTie} />
+                <ScoreBoard player={scoreCard.players[playerIndex]} scoreCard={scoreCard} />
+                <GameBoard
+                    player={scoreCard.players[playerIndex]}
+                    onChange={togglePlayer}
+                    onWin={addPointToWinner}
+                    onTie={addPointToTie}
+                />
             </div>
         </>
     );
