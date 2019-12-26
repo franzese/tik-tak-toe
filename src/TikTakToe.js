@@ -4,7 +4,6 @@ import ScoreBoard from './components/ScoreBoard/ScoreBoard';
 import './TikTakToe.scss';
 
 function TikTakToe() {
-    // const [nextMessage, setNextMessage] = useState("Player 1's turn");
     const [scoreCard, setScoreCard] = useState({
         tie: 0,
         playerOne: { points: 0, name: 'Player', mark: 'O', key: 'playerOne' },
@@ -31,7 +30,6 @@ function TikTakToe() {
             <div className="tik-tak-toe">
                 <ScoreBoard player={player} scoreCard={scoreCard} />
                 <GameBoard player={player} onChange={togglePlayer} onWin={addPointToWinner} onTie={addPointToTie} />
-                <h1 className={'message'}>{'TIK TAK TOE'}</h1>
             </div>
         </>
     );
