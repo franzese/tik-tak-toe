@@ -19,6 +19,7 @@ export default function GameBoard({ board, onWin, onChange, onTie, player }) {
     const [moveCount, setMoveCount] = useState(0);
     const [needsReset, setResetFlag] = useState(false);
     const [winningRow, setWinningRow] = useState([]);
+    const [previousPlayer, setPreviousPlayer] = useState({});
 
     const winningRows = [
         [0, 1, 2],
@@ -44,6 +45,8 @@ export default function GameBoard({ board, onWin, onChange, onTie, player }) {
         } else if (!spaces[index].trim()) {
             setSpaces([...spaces.slice(0, index), player.mark, ...spaces.slice(index + 1)]);
             setMoveCount(moveCount + 1);
+            setPreviousPlayer(player);
+            onChange();
         }
     };
 
@@ -59,9 +62,7 @@ export default function GameBoard({ board, onWin, onChange, onTie, player }) {
                 setResetFlag(true);
                 checkTie = false;
                 setWinningRow(row);
-                onWin(player);
-            } else {
-                onChange();
+                onWin(previousPlayer);
             }
         });
 
