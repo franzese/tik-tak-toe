@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './GameBoard.scss';
 
+const EMPTYBOARD = ['', '', '', '', '', '', '', '', ''];
+const EMPTYCELL = '';
+
 export function BoardSpace({ index, value, onClick, isWinner }) {
     const move = event => {
         onClick(event, index);
@@ -15,8 +18,7 @@ export function BoardSpace({ index, value, onClick, isWinner }) {
 }
 
 export default function GameBoard({ board, onWin, onChange, onTie, player }) {
-    const [spaces, setSpaces] = useState(board || [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']);
-    const [moveCount, setMoveCount] = useState(0);
+    const [spaces, setSpaces] = useState(board || EMPTYBOARD);
     const [needsReset, setResetFlag] = useState(false);
     const [winningRow, setWinningRow] = useState([]);
     const [previousPlayer, setPreviousPlayer] = useState({});
@@ -33,8 +35,7 @@ export default function GameBoard({ board, onWin, onChange, onTie, player }) {
     ];
 
     const reset = () => {
-        setSpaces([' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']);
-        setMoveCount(0);
+        setSpaces(EMPTYBOARD);
         setResetFlag(false);
         setWinningRow([]);
     };
@@ -44,21 +45,17 @@ export default function GameBoard({ board, onWin, onChange, onTie, player }) {
             reset();
         } else if (!spaces[index].trim()) {
             setSpaces([...spaces.slice(0, index), player.mark, ...spaces.slice(index + 1)]);
-            setMoveCount(moveCount + 1);
             setPreviousPlayer(player);
             onChange();
         }
     };
 
-    const checkWins = () => {
+    const checkForGameIsOver = () => {
         let checkTie = true;
         winningRows.forEach(row => {
-            // todo- clean up
-            if (
-                spaces[row[0]][0] !== ' ' &&
-                spaces[row[0]][0] === spaces[row[1]][0] &&
-                spaces[row[1]][0] === spaces[row[2]][0]
-            ) {
+            const [a, b, c] = row;
+            if (spaces[a] !== EMPTYCELL && spaces[a] === spaces[b] && spaces[b] === spaces[c]) {
+                debugger;
                 setResetFlag(true);
                 checkTie = false;
                 setWinningRow(row);
@@ -66,7 +63,8 @@ export default function GameBoard({ board, onWin, onChange, onTie, player }) {
             }
         });
 
-        if (checkTie && moveCount >= spaces.length) {
+        // look for empty space
+        if (checkTie && spaces.indexOf(EMPTYCELL) < 0) {
             onTie();
             setResetFlag(true);
         }
@@ -78,7 +76,7 @@ export default function GameBoard({ board, onWin, onChange, onTie, player }) {
     };
 
     useEffect(() => {
-        checkWins();
+        checkForGameIsOver();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [spaces]);
 
