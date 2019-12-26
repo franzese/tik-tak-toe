@@ -7,8 +7,8 @@ function TikTakToe() {
     // const [nextMessage, setNextMessage] = useState("Player 1's turn");
     const [scoreCard, setScoreCard] = useState({
         tie: 0,
-        playerOne: { points: 0, name: 'Player 1', mark: 'O' },
-        playerTwo: { points: 0, name: 'Player 2', mark: 'X' },
+        playerOne: { points: 0, name: 'Player', mark: 'O', key: 'playerOne' },
+        playerTwo: { points: 0, name: 'Player', mark: 'X', key: 'playerTwo' },
     });
     const [player, setPlayer] = useState({ key: 'playerOne', ...scoreCard.playerOne });
 
@@ -18,7 +18,6 @@ function TikTakToe() {
     };
 
     const addPointToTie = winner => {
-        alert('Tie');
         setScoreCard({ ...scoreCard, tie: scoreCard.tie + 1 });
     };
 
