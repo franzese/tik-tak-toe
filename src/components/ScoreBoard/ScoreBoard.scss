@@ -1,0 +1,49 @@
+@import '../../styles/colors.scss';
+@import '../../styles/mixins.scss';
+
+.score-board {
+    color: white;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin: 2rem 0;
+
+    .playerOne.current-turn {
+        @include O;
+    }
+    .playerTwo.current-turn {
+        @include X;
+    }
+
+    h1 {
+        display: inline;
+        font-size: 2.5rem;
+        width: 100%;
+    }
+
+    mark {
+        display: inline;
+        font-size: 2.5rem;
+        background-color: transparent;
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .scores {
+        margin: 1rem;
+        font-size: 4rem;
+    }
+
+    input {
+        border: dotted white;
+        border-width: 0 0 5px 0;
+        color: white;
+        font-size: 3rem;
+        appearance: none;
+        background-color: black;
+        border-radius: 3px;
+        outline: none;
+        &:focus {
+            background: $oafoaf;
+        }
+    }
+}

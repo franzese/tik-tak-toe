@@ -27,42 +27,23 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+### Project Prompt
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Please write a simple two-player game of ​tic-tac-toe​ on 3x3 board using React components. This game is played by two players in the ​same​ browser window, with progress saved to a server using either REST or GraphQL. Please mock this server endpoints by storing this information in localStorage.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Your solution should provide a clean abstraction for managing state of the components, game, and cumulative scores. Ideally, this abstraction leverages the latest and greatest best practices from the React community, but any clean and generalizable abstraction will do. Also, css styling and high-quality interactions are a bonus.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+<b>Note: The cumulative number of wins/losses/draws for each player should be stored at the top of the screen on a fixed navigation bar, and this information should persist after any page reload.</b>>
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Once submitted - We’ll schedule a call where; you'll be given 30 minutes to discuss your solution and any engineering tradeoffs you had to consider. Be prepared to discuss:
 
-## Learn More
+-   Your overall approach to the problem
+-   Choice of component architecture (boxes, Xs and Os, score)
+-   DOM and React component hierarchy
+-   State management (initialization, events, valid moves, wins, hooks, context)
+-   Rendering and dependencies
+-   Scaling and API considerations
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Finally, although the server implementation is out of scope, but please be prepared to discuss how you would choose to interact with a server if the game expanded to multiplayer action. If time permits, outline a REST (or GraphQL!) API spec for your hypothetical back-end.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+<b><i>Bonus points: Submitting a Git Repo</i></b>
