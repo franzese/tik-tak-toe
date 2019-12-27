@@ -7,10 +7,10 @@
     grid-template-columns: 1fr 1fr 1fr;
     margin: 2rem 0;
 
-    .playerOne {
+    .playerOne.current-turn {
         @include O;
     }
-    .playerTwo {
+    .playerTwo.current-turn {
         @include X;
     }
 

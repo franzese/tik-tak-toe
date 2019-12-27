@@ -55,7 +55,6 @@ export default function GameBoard({ board, onWin, onChange, onTie, player }) {
         winningRows.forEach(row => {
             const [a, b, c] = row;
             if (spaces[a] !== EMPTYCELL && spaces[a] === spaces[b] && spaces[b] === spaces[c]) {
-                debugger;
                 setResetFlag(true);
                 checkTie = false;
                 setWinningRow(row);

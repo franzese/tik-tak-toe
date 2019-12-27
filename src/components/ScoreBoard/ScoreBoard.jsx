@@ -4,7 +4,7 @@ import './ScoreBoard.scss';
 export default function ScoreBoard({ player, scoreCard }) {
     const isPlayersTurn = key => {
         if (player.key === key) {
-            return key;
+            return key + ' current-turn';
         }
         return '';
     };
