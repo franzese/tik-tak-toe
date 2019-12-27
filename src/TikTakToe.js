@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import GameBoard from './components/GameBoard/GameBoard';
 import ScoreBoard from './components/ScoreBoard/ScoreBoard';
+import { saveScoreCard, getScoreCard, resetLocalStorage } from './services/Services';
 import './TikTakToe.scss';
 
 function TikTakToe() {
+    const [isRefresh, setInProgress] = useState(true);
     const [scoreCard, setScoreCard] = useState({
         tie: 0,
         players: [
@@ -29,6 +31,16 @@ function TikTakToe() {
         if (playerIndex === 0) setPlayerIndex(1);
         else if (playerIndex === 1) setPlayerIndex(0);
     };
+
+    useEffect(() => {
+        if (isRefresh) {
+            const scoreCardFromService = getScoreCard();
+            if (scoreCardFromService) setScoreCard(scoreCardFromService);
+            setInProgress(false);
+        } else {
+            saveScoreCard(scoreCard);
+        }
+    }, [scoreCard]);
 
     return (
         <>
